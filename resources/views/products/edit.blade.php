@@ -3,19 +3,21 @@
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
-                <div class="card mt-3 p-3">
-                    <form action="/products/store" method="post" enctype="multipart/form-data">
-                        @csrf 
+                <div class="card mt-5 p-3">
+                    <h2>Edit for #{{$product->name}}</h2>
+                    <form action="/products/{{ $product->id }}/update" method="post" enctype="multipart/form-data">
+                        @csrf
+                        @method('PUT')
                         <div class="form-group">
                             <label>Name</label>
-                            <input type="text" name="name" class="form-control" value="{{ old('name') }}">
+                            <input type="text" name="name" class="form-control" value="{{ old('name', $product->name) }}">
                             @if($errors->has('name'))
                                 <span class="text-danger">{{ $errors->first('name') }}</span>
                             @endif
                         </div>
                         <div class="form-group">
                             <label>Description</label>
-                            <textarea name="description" class="form-control">{{ old('description') }}</textarea>
+                            <textarea name="description" class="form-control">{{ old('description', $product->description) }}</textarea>
                             @if($errors->has('description'))
                                 <span class="text-danger">{{ $errors->first('description') }}</span>
                             @endif
@@ -33,5 +35,4 @@
             </div>
         </div>
     </div>
-
-    @endsection
+@endsection
